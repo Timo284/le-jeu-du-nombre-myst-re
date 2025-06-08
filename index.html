@@ -9,30 +9,50 @@
   <h1>Devine le nombre !</h1>
   <p>Je pense à un nombre entre 1 et 100. Tu as 10 tentatives !</p>
   
-  <input type="number" id="guess" placeholder="Ta réponse">
-  <button onclick="verifier()">Valider</button>
+  <input type="number" id="guess" placeholder="Ta réponse" min="1" max="100">
+  <button id="validerBtn">Valider</button>
 
   <p id="message"></p>
 
   <script>
     const nombreSecret = Math.floor(Math.random() * 100) + 1;
     let tentatives = 0;
-    let maxTentatives = 10;
+    const maxTentatives = 10;
+    let jeuFini = false;
 
-    function verifier() {
-      const essai = parseInt(document.getElementById("guess").value);
+    document.getElementById("validerBtn").addEventListener("click", function () {
+      if (jeuFini) return;
+
+      const champ = document.getElementById("guess");
+      const essai = parseInt(champ.value);
+      const message = document.getElementById("message");
+
+      if (isNaN(essai) || essai < 1 || essai > 100) {
+        message.textContent = "Entre un nombre valide entre 1 et 100.";
+        return;
+      }
+
       tentatives++;
 
       if (essai === nombreSecret) {
-        document.getElementById("message").textContent = `Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
+        message.textContent = `🎉 Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
+        jeuFini = true;
       } else if (tentatives >= maxTentatives) {
-        document.getElementById("message").textContent = `Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+        message.textContent = `😢 Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+        jeuFini = true;
       } else if (essai < nombreSecret) {
-        document.getElementById("message").textContent = `C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
+        message.textContent = `C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
       } else {
-        document.getElementById("message").textContent = `C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
+        message.textContent = `C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
       }
-    }
+
+      champ.value = "";
+
+      if (jeuFini) {
+        document.getElementById("validerBtn").disabled = true;
+        champ.disabled = true;
+      }
+    });
   </script>
 </body>
 </html>
