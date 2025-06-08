@@ -2,28 +2,36 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Jeu du nombre mystère</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devine le nombre</title>
 </head>
 <body>
-  <h1>Devine le nombre mystère !</h1>
-  <input type="number" id="guess" placeholder="Entre un nombre">
+  <h1>Devine le nombre !</h1>
+  <p>Je pense à un nombre entre 1 et 100. Tu as 10 tentatives !</p>
+  
+  <input type="number" id="guess" placeholder="Ta réponse">
   <button onclick="verifier()">Valider</button>
+
   <p id="message"></p>
+
   <script>
-    const nombresecret = Math.Floor(Math.randon() * 100) + 1;
-    let tentative = 0;
-    let maxtentative = 10;
+    const nombreSecret = Math.floor(Math.random() * 100) + 1;
+    let tentatives = 0;
+    let maxTentatives = 10;
+
     function verifier() {
-        const essai = parseInt(document.getElementById("guess").value); tentatives++;
-if (essai === nombreSecret) {
-      document.getElementById("message").textContent = `Bravo ! Tu as trouvé le nombre en ${tentatives} tentative(s) !`;
-    } else if (tentatives >= maxTentatives) {
-      document.getElementById("message").textContent = `Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
-    } else if (essai < nombreSecret) {
-      document.getElementById("message").textContent = `C'est plus grand ! Il te reste ${maxTentatives - tentatives} tentative(s).`;
-    } else {
-      document.getElementById("message").textContent = `C'est plus petit ! Il te reste ${maxTentatives - tentatives} tentative(s).`;
-    }
+      const essai = parseInt(document.getElementById("guess").value);
+      tentatives++;
+
+      if (essai === nombreSecret) {
+        document.getElementById("message").textContent = `Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
+      } else if (tentatives >= maxTentatives) {
+        document.getElementById("message").textContent = `Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+      } else if (essai < nombreSecret) {
+        document.getElementById("message").textContent = `C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
+      } else {
+        document.getElementById("message").textContent = `C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
+      }
     }
   </script>
 </body>
