@@ -35,10 +35,10 @@
       tentatives++;
 
       if (essai === nombreSecret) {
-        message.textContent = `🎉 Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
+        message.textContent = ` Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
         jeuFini = true;
       } else if (tentatives >= maxTentatives) {
-        message.textContent = `😢 Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+        message.textContent = ` Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
         jeuFini = true;
       } else if (essai < nombreSecret) {
         message.textContent = `C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
