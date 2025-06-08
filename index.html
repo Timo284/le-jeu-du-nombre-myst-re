@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>le jeu du nombre mystère</title>
-</head> le jeu du nombre mystère
+  <meta charset="UTF-8">
+  <title>Jeu du nombre mystère</title>
+</head>
 <body>
-    
+  <h1>Devine le nombre mystère !</h1>
+  <input type="number" id="guess" placeholder="Entre un nombre">
+  <button onclick="verifier()">Valider</button>
+  <p id="message"></p>
+  <script>
+    const nombresecret = Math.Floor(Math.randon() * 100) + 1;
+    let tentative = 0;
+    let maxtentative = 10;
+    function verifier() {
+        const essai = parseInt(document.getElementById("guess").value); tentatives++;
+if (essai === nombreSecret) {
+      document.getElementById("message").textContent = `Bravo ! Tu as trouvé le nombre en ${tentatives} tentative(s) !`;
+    } else if (tentatives >= maxTentatives) {
+      document.getElementById("message").textContent = `Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+    } else if (essai < nombreSecret) {
+      document.getElementById("message").textContent = `C'est plus grand ! Il te reste ${maxTentatives - tentatives} tentative(s).`;
+    } else {
+      document.getElementById("message").textContent = `C'est plus petit ! Il te reste ${maxTentatives - tentatives} tentative(s).`;
+    }
+  </script>
 </body>
 </html>
