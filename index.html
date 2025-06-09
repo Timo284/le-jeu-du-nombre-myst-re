@@ -4,12 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Devine le nombre</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #e0f7fa, #e1bee7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #4a148c;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    #guess {
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ba68c8;
+      border-radius: 8px;
+      width: 200px;
+      margin: 10px 0;
+    }
+
+    #validerBtn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #7b1fa2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #validerBtn:hover {
+      background-color: #4a0072;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h1>Devine le nombre !</h1>
   <p>Je pense à un nombre entre 1 et 100. Tu as 10 tentatives !</p>
   
   <input type="number" id="guess" placeholder="Ta réponse" min="1" max="100">
+  <br>
   <button id="validerBtn">Valider</button>
 
   <p id="message"></p>
@@ -35,15 +86,15 @@
       tentatives++;
 
       if (essai === nombreSecret) {
-        message.textContent = ` Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
+        message.textContent = `🎉 Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
         jeuFini = true;
       } else if (tentatives >= maxTentatives) {
-        message.textContent = ` Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
+        message.textContent = `😢 Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
         jeuFini = true;
       } else if (essai < nombreSecret) {
-        message.textContent = `C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
+        message.textContent = `🔺 C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
       } else {
-        message.textContent = `C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
+        message.textContent = `🔻 C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
       }
 
       champ.value = "";
