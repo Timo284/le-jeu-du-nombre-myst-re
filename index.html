@@ -15,16 +15,15 @@
       min-height: 100vh;
       margin: 0;
     }
-
     h1 {
       color: #4a148c;
     }
-
     p {
       font-size: 1.1rem;
       color: #333;
+      text-align: center;
+      max-width: 90%;
     }
-
     #guess {
       padding: 10px;
       font-size: 1rem;
@@ -33,8 +32,7 @@
       width: 200px;
       margin: 10px 0;
     }
-
-    #validerBtn {
+    button {
       padding: 10px 20px;
       font-size: 1rem;
       background-color: #7b1fa2;
@@ -43,67 +41,86 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin: 5px;
     }
-
-    #validerBtn:hover {
+    button:hover {
       background-color: #4a0072;
     }
-
     #message {
       margin-top: 20px;
       font-weight: bold;
+    }
+    #rejouerBtn {
+      display: none;
+      background-color: #009688;
+    }
+    #rejouerBtn:hover {
+      background-color: #00695c;
     }
   </style>
 </head>
 <body>
   <h1>Devine le nombre !</h1>
   <p>Je pense à un nombre entre 1 et 100. Tu as 10 tentatives !</p>
-  
   <input type="number" id="guess" placeholder="Ta réponse" min="1" max="100">
   <br>
   <button id="validerBtn">Valider</button>
-
+  <button id="rejouerBtn">Rejouer</button>
   <p id="message"></p>
-
   <script>
-    const nombreSecret = Math.floor(Math.random() * 100) + 1;
-    let tentatives = 0;
+    let nombreSecret;
+    let tentatives;
     const maxTentatives = 10;
     let jeuFini = false;
-
-    document.getElementById("validerBtn").addEventListener("click", function () {
+    const champ = document.getElementById("guess");
+    const message = document.getElementById("message");
+    const validerBtn = document.getElementById("validerBtn");
+    const rejouerBtn = document.getElementById("rejouerBtn");
+    function initialiserJeu() {
+      nombreSecret = Math.floor(Math.random() * 100) + 1;
+      tentatives = 0;
+      jeuFini = false;
+      champ.disabled = false;
+      champ.value = "";
+      message.textContent = "";
+      validerBtn.disabled = false;
+      rejouerBtn.style.display = "none";
+    }
+    function validerEssai() {
       if (jeuFini) return;
-
-      const champ = document.getElementById("guess");
       const essai = parseInt(champ.value);
-      const message = document.getElementById("message");
-
       if (isNaN(essai) || essai < 1 || essai > 100) {
         message.textContent = "Entre un nombre valide entre 1 et 100.";
         return;
       }
-
       tentatives++;
-
       if (essai === nombreSecret) {
         message.textContent = `🎉 Bravo ! Tu as trouvé en ${tentatives} tentative(s) !`;
-        jeuFini = true;
+        finDuJeu();
       } else if (tentatives >= maxTentatives) {
         message.textContent = `😢 Dommage ! Tu as perdu. Le nombre était ${nombreSecret}.`;
-        jeuFini = true;
+        finDuJeu();
       } else if (essai < nombreSecret) {
         message.textContent = `🔺 C'est plus grand. Il te reste ${maxTentatives - tentatives} essai(s).`;
       } else {
         message.textContent = `🔻 C'est plus petit. Il te reste ${maxTentatives - tentatives} essai(s).`;
       }
-
       champ.value = "";
-
-      if (jeuFini) {
-        document.getElementById("validerBtn").disabled = true;
-        champ.disabled = true;
+    }
+    function finDuJeu() {
+      jeuFini = true;
+      champ.disabled = true;
+      validerBtn.disabled = true;
+      rejouerBtn.style.display = "inline-block";
+    }
+    validerBtn.addEventListener("click", validerEssai);
+    rejouerBtn.addEventListener("click", initialiserJeu);
+    champ.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        validerEssai();
       }
     });
+    initialiserJeu();
   </script>
 </body>
 </html>
