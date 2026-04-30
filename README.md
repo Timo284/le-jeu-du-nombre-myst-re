@@ -1,21 +1,35 @@
-import random
+import java.util.Random;
+import java.util.Scanner;
 
-def jeu_nombre():
-    nombre_secret = random.randint(1, 100)
-    essais = 0
-    
-    print("Bienvenue ! J'ai choisi un nombre entre 1 et 100.")
-    
-    while True:
-        choix = int(input("Entrez un nombre : "))
-        essais += 1
-        
-        if choix < nombre_secret:
-            print("Trop petit !")
-        elif choix > nombre_secret:
-            print("Trop grand !")
-        else:
-            print(f"Bravo ! Vous avez trouvé en {essais} essai(s) !")
-            break
+public class JeuNombre {
 
-jeu_nombre()
+    public static void jeuNombre() {
+        Random random = new Random();
+        int nombreSecret = random.nextInt(100) + 1;
+        int essais = 0;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bienvenue ! J'ai choisi un nombre entre 1 et 100.");
+
+        while (true) {
+            System.out.print("Entrez un nombre : ");
+            int choix = scanner.nextInt();
+            essais++;
+
+            if (choix < nombreSecret) {
+                System.out.println("Trop petit !");
+            } else if (choix > nombreSecret) {
+                System.out.println("Trop grand !");
+            } else {
+                System.out.println("Bravo ! Vous avez trouvé en " + essais + " essai(s) !");
+                break;
+            }
+        }
+
+        scanner.close();
+    }
+
+    public static void main(String[] args) {
+        jeuNombre();
+    }
+}
